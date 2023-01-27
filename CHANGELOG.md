@@ -1,4 +1,7 @@
 # CHANGELOG
+## v0.6.1, 27.01.2023
+
+ * Changed xmldom dependency to @xmldom/xmldom, fixing security vulnerabilities
 
 ## v0.6.0, 14.10.2019
 
