@@ -8,8 +8,8 @@ describe("Error collection", function(){
 
    it("In case root node differs - no any other checks are made", function(){
 
-      var doc1 = parser.parseFromString("<root1 attr='1'><a></a></root1>");
-      var doc2 = parser.parseFromString("<root2 attr2='1'><b></b></root2>");
+      var doc1 = parser.parseFromString("<root1 attr='1'><a></a></root1>", "text/xml");
+      var doc2 = parser.parseFromString("<root2 attr2='1'><b></b></root2>", "text/xml");
 
       var result = compare(doc1, doc2, {});
 
@@ -24,8 +24,8 @@ describe("Error collection", function(){
 
       it("All attributes at single node are compared", function(){
 
-         var doc1 = parser.parseFromString("<root><a attr1='1' attr2='2' attr3='3'></a></root>");
-         var doc2 = parser.parseFromString("<root><a attr1='10' attr2='2' attr4='4'></a></root>");
+         var doc1 = parser.parseFromString("<root><a attr1='1' attr2='2' attr3='3'></a></root>", "text/xml");
+         var doc2 = parser.parseFromString("<root><a attr1='10' attr2='2' attr4='4'></a></root>", "text/xml");
 
          var result = compare(doc1, doc2, {});
 
@@ -40,8 +40,8 @@ describe("Error collection", function(){
 
       it("All attributes that are not found is reported", function(){
 
-         var doc1 = parser.parseFromString("<root><a attr1='1' attr2='2' attr3='3'></a></root>");
-         var doc2 = parser.parseFromString("<root><a attr1='1'></a></root>");
+         var doc1 = parser.parseFromString("<root><a attr1='1' attr2='2' attr3='3'></a></root>", "text/xml");
+         var doc2 = parser.parseFromString("<root><a attr1='1'></a></root>", "text/xml");
 
          var result = compare(doc1, doc2, {});
 
@@ -52,8 +52,8 @@ describe("Error collection", function(){
          assert.equal("Attribute 'attr3' is missed", failures[1].message);
 
          // Case: Target has no attributes at all
-         doc1 = parser.parseFromString("<root><a attr2='2' attr3='3'></a></root>");
-         doc2 = parser.parseFromString("<root><a></a></root>");
+         doc1 = parser.parseFromString("<root><a attr2='2' attr3='3'></a></root>", "text/xml");
+         doc2 = parser.parseFromString("<root><a></a></root>", "text/xml");
 
          result = compare(doc1, doc2, {});
 
@@ -67,8 +67,8 @@ describe("Error collection", function(){
 
       it("All extra attributes is reported", function(){
 
-         var doc1 = parser.parseFromString("<root><a attr1='1'></a></root>");
-         var doc2 = parser.parseFromString("<root><a attr1='1' attr2='2' attr3='3'></a></root>");
+         var doc1 = parser.parseFromString("<root><a attr1='1'></a></root>", "text/xml");
+         var doc2 = parser.parseFromString("<root><a attr1='1' attr2='2' attr3='3'></a></root>", "text/xml");
 
          var result = compare(doc1, doc2, {});
 
@@ -79,8 +79,8 @@ describe("Error collection", function(){
          assert.equal("Extra attribute 'attr3'", failures[1].message);
 
          // Case: Source has no attributes at all
-         doc1 = parser.parseFromString("<root><a></a></root>");
-         doc2 = parser.parseFromString("<root><a attr2='2' attr3='3'></a></root>");
+         doc1 = parser.parseFromString("<root><a></a></root>", "text/xml");
+         doc2 = parser.parseFromString("<root><a attr2='2' attr3='3'></a></root>", "text/xml");
 
          result = compare(doc1, doc2, {});
 
@@ -97,8 +97,8 @@ describe("Error collection", function(){
    describe("Nodes comparison", function(){
 
       it("Differences reported by types first", function(){
-         var doc1 = parser.parseFromString("<root><a /></root>");
-         var doc2 = parser.parseFromString("<root>TextTextText</root>");
+         var doc1 = parser.parseFromString("<root><a /></root>", "text/xml");
+         var doc2 = parser.parseFromString("<root>TextTextText</root>", "text/xml");
 
          var result = compare(doc1, doc2, {});
 
@@ -109,8 +109,8 @@ describe("Error collection", function(){
       });
 
       it("... and by node names then", function(){
-         var doc1 = parser.parseFromString("<root><a /></root>");
-         var doc2 = parser.parseFromString("<root><b /></root>");
+         var doc1 = parser.parseFromString("<root><a /></root>", "text/xml");
+         var doc2 = parser.parseFromString("<root><b /></root>", "text/xml");
 
          var result = compare(doc1, doc2, {});
 
@@ -127,8 +127,8 @@ describe("Error collection", function(){
       describe("Text nodes", function(){
 
          it("Extra nodes reported", function(){
-            var doc1 = parser.parseFromString("<root>First<a /></root>");
-            var doc2 = parser.parseFromString("<root>First<a />Second</root>");
+            var doc1 = parser.parseFromString("<root>First<a /></root>", "text/xml");
+            var doc2 = parser.parseFromString("<root>First<a />Second</root>", "text/xml");
 
             var result = compare(doc1, doc2, {});
 
@@ -139,8 +139,8 @@ describe("Error collection", function(){
          });
 
          it("Not found nodes reported", function(){
-            var doc1 = parser.parseFromString("<root>First<a />Second</root>");
-            var doc2 = parser.parseFromString("<root>First<a /></root>");
+            var doc1 = parser.parseFromString("<root>First<a />Second</root>", "text/xml");
+            var doc2 = parser.parseFromString("<root>First<a /></root>", "text/xml");
 
             var result = compare(doc1, doc2, {});
 
@@ -149,8 +149,8 @@ describe("Error collection", function(){
             assert.equal(1, failures.length);
             assert.equal("Text node 'Second' is missed", failures[0].message);
 
-            doc1 = parser.parseFromString("<root>First  <a />  Second</root>");
-            doc2 = parser.parseFromString("<root>  First<a /></root>");
+            doc1 = parser.parseFromString("<root>First  <a />  Second</root>", "text/xml");
+            doc2 = parser.parseFromString("<root>  First<a /></root>", "text/xml");
 
             result = compare(doc1, doc2, { stripSpaces: true });
 
@@ -161,8 +161,8 @@ describe("Error collection", function(){
          });
 
          it("Different content reported", function(){
-            var doc1 = parser.parseFromString("<root>Foo<a /></root>");
-            var doc2 = parser.parseFromString("<root>Bar<a /></root>");
+            var doc1 = parser.parseFromString("<root>Foo<a /></root>", "text/xml");
+            var doc2 = parser.parseFromString("<root>Bar<a /></root>", "text/xml");
 
             var result = compare(doc1, doc2, {});
 
@@ -181,8 +181,8 @@ describe("Error collection", function(){
 
       it("User can provide custom comparison routine, it can be used to extended reporting", function(){
 
-         var doc1 = parser.parseFromString("<root><a attr='10' /></root>");
-         var doc2 = parser.parseFromString("<root><a attr='20' /></root>");
+         var doc1 = parser.parseFromString("<root><a attr='10' /></root>", "text/xml");
+         var doc2 = parser.parseFromString("<root><a attr='20' /></root>", "text/xml");
 
          var result = compare(doc1, doc2, {
             comparators: {
@@ -205,8 +205,8 @@ describe("Error collection", function(){
 
       it("Custom comparison routine can ignore node differences", function(){
 
-         var doc1 = parser.parseFromString("<root><a attr='10' /></root>");
-         var doc2 = parser.parseFromString("<root><a attr='20' /></root>");
+         var doc1 = parser.parseFromString("<root><a attr='10' /></root>", "text/xml");
+         var doc2 = parser.parseFromString("<root><a attr='20' /></root>", "text/xml");
 
          var result = compare(doc1, doc2, {
             comparators: {
@@ -224,8 +224,8 @@ describe("Error collection", function(){
 
       it("Custom comparison routine can skip node checking. It will be processed by common routine.", function(){
 
-         var doc1 = parser.parseFromString("<root><a attr='10' m='2'/></root>");
-         var doc2 = parser.parseFromString("<root><a attr='20' m='3'/></root>");
+         var doc1 = parser.parseFromString("<root><a attr='10' m='2'/></root>", "text/xml");
+         var doc2 = parser.parseFromString("<root><a attr='20' m='3'/></root>", "text/xml");
 
          var result = compare(doc1, doc2, {
             comparators: {

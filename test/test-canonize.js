@@ -7,7 +7,7 @@ var canonize = (new (domCompare.XMLSerializer)()).serializeToString;
 describe("Canonize", function(){
    it("can make a canonical form of a document", function(){
       var doc = parser.parseFromString("<doc a='x' z='y' b='1'><elem m='1' x='k' a='4'><a>" +
-         "<!--COMMENT--></a><b><![CDATA[ cdata node]]></b></elem><x><z></z></x></doc>");
+         "<!--COMMENT--></a><b><![CDATA[ cdata node]]></b></elem><x><z></z></x></doc>", "text/xml");
       var docCanon =
 "<doc\n" +
 "  a=\"x\"\n" +
@@ -32,7 +32,7 @@ describe("Canonize", function(){
    });
 
    it("Default indent - 2 spaces for attributes and 4 spaces for nested elements", function(){
-      var doc = parser.parseFromString("<doc a='1'><nested>text</nested></doc>");
+      var doc = parser.parseFromString("<doc a='1'><nested>text</nested></doc>", "text/xml");
       var docCanon =
 "<doc\n" +
 "  a=\"1\">\n" +
@@ -44,11 +44,11 @@ describe("Canonize", function(){
    });
 
    it("Empty tags serialized in short form", function(){
-      var doc = parser.parseFromString("<doc></doc>");
+      var doc = parser.parseFromString("<doc></doc>", "text/xml");
       var docCanon = "<doc />";
       assert.equal(docCanon, canonize(doc));
 
-      doc = parser.parseFromString("<doc a='1'></doc>");
+      doc = parser.parseFromString("<doc a='1'></doc>", "text/xml");
       docCanon =
 "<doc\n" +
 "  a=\"1\" />";
@@ -56,7 +56,7 @@ describe("Canonize", function(){
    });
 
    it("Any leading/triling whitespace in text and comment nodes is trimmed", function(){
-      var doc = parser.parseFromString("<doc>  test<elem>   aaa   </elem><!--  comment  --></doc>");
+      var doc = parser.parseFromString("<doc>  test<elem>   aaa   </elem><!--  comment  --></doc>", "text/xml");
       var docCanon =
 "<doc>\n" +
 "    test\n" +
@@ -69,7 +69,7 @@ describe("Canonize", function(){
    });
 
    it("Attribute values serialized in double quotes", function(){
-      var doc = parser.parseFromString("<doc><a href='\"x\"' alt=\"'x'\" /></doc>");
+      var doc = parser.parseFromString("<doc><a href='\"x\"' alt=\"'x'\" /></doc>", "text/xml");
       var docCanon =
 "<doc>\n" +
 "    <a\n" +

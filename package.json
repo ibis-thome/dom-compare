@@ -14,12 +14,12 @@
    "dependencies": {
       "argparse": "^2.0.1",
       "colors": "^1.4.0",
-      "@xmldom/xmldom": "0.8.6"
+      "@xmldom/xmldom": "0.9.5"
    },
    "devDependencies": {
       "coveralls": "^3.1.1",
       "istanbul": "^0.4.5",
-      "mocha": "^10.2.0",
+      "mocha": "^10.7.3",
       "mocha-istanbul": "0.3.0"
    },
    "scripts": {

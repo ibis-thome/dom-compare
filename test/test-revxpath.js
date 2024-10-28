@@ -8,7 +8,7 @@ describe("Reverse XPath", function(){
 
    it("Builds a node path by its name", function(){
 
-      var doc = parser.parseFromString("<doc><child><item /></child></doc>");
+      var doc = parser.parseFromString("<doc><child><item /></child></doc>", "text/xml");
 
       var path = revxpath(doc.getElementsByTagName('item')[0]);
 
@@ -28,7 +28,7 @@ describe("Reverse XPath", function(){
 
       it("number is added to a node name", function(){
 
-         var doc = parser.parseFromString("<doc><child><item /><item><inner /></item></child></doc>");
+         var doc = parser.parseFromString("<doc><child><item /><item><inner /></item></child></doc>", "text/xml");
 
          var path = revxpath(doc.getElementsByTagName('item')[0]);
 
@@ -46,7 +46,7 @@ describe("Reverse XPath", function(){
 
       it("number is added correctly with repeating node names on multiple levels", function() {
 
-         var doc = parser.parseFromString("<html><body><div><div><div>X</div></div><div><div>Y</div></div><div><div>Z</div></div></div><div><section><div>Some Text</div></section><section><div>Some Text Part 2</div></section></div></body></html>");
+         var doc = parser.parseFromString("<html><body><div><div><div>X</div></div><div><div>Y</div></div><div><div>Z</div></div></div><div><section><div>Some Text</div></section><section><div>Some Text Part 2</div></section></div></body></html>", "text/xml");
 
          // Select <div>Some Text Part 2</div> and get the xpath
          var path = revxpath(doc.getElementsByTagName('div')[9]);
@@ -56,7 +56,7 @@ describe("Reverse XPath", function(){
 
       it("if ID attribute is present, it is used instead of number", function(){
 
-         var doc = parser.parseFromString("<doc><child><item id='x'/><item id='y'/></child></doc>");
+         var doc = parser.parseFromString("<doc><child><item id='x'/><item id='y'/></child></doc>", "text/xml");
 
          var path = revxpath(doc.getElementById('x'));
 

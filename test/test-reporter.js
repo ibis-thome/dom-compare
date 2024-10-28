@@ -11,8 +11,8 @@ describe("Differences reporting", function(){
 
       it("grouping differences by source node XPath", function(){
 
-         var doc = parser.parseFromString("<doc attr1='1' attr2='2'><node1 attrX='y'><inner1 /></node1><node2><inner /></node2></doc>");
-         var doc2 = parser.parseFromString("<doc attr1='10'><node1 /><node2 /><extraNode /></doc>");
+         var doc = parser.parseFromString("<doc attr1='1' attr2='2'><node1 attrX='y'><inner1 /></node1><node2><inner /></node2></doc>", "text/xml");
+         var doc2 = parser.parseFromString("<doc attr1='10'><node1 /><node2 /><extraNode /></doc>", "text/xml");
 
          var failures = reporter.getDifferences(compare(doc, doc2));
 
